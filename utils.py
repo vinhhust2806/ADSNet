@@ -1,12 +1,19 @@
 import torch.nn as nn
 import torch
 
+def dice_coef_metric(pred, label):
+    intersection = 2.0 * (pred * label).sum()
+    union = pred.sum() + label.sum()
+    if pred.sum() == 0 and label.sum() == 0:
+        return 1.
+    return intersection / union
+    
 def dice_coef_loss(pred, label):
     smooth = 1.0
     intersection = 2.0 * (pred * label).sum() + smooth
     union = pred.sum() + label.sum() + smooth
     return 1 - (intersection / union)
-
+    
 def bce_dice_loss(pred, label):
     dice_loss = dice_coef_loss(pred, label)
     bce_loss = nn.BCELoss()(pred, label)
