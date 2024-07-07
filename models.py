@@ -20,6 +20,74 @@ class BasicConv2d(nn.Module):
         x = self.bn(x)
         return x
 
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class PASPP(nn.Module):
+    def __init__(self, in_channels, out_channels):
+        super(FeatureTransform, self).__init__()
+        self.conv1x1_1 = nn.Conv2d(in_channels, out_channels // 4, kernel_size=1, stride=1, padding=0)
+        self.conv1x1_2 = nn.Conv2d(in_channels, out_channels // 4, kernel_size=1, stride=1, padding=0)
+        self.conv1x1_3 = nn.Conv2d(in_channels, out_channels // 4, kernel_size=1, stride=1, padding=0)
+        self.conv1x1_4 = nn.Conv2d(in_channels, out_channels // 4, kernel_size=1, stride=1, padding=0)
+        
+        self.bn1_1 = nn.BatchNorm2d(out_channels // 4)
+        self.bn1_2 = nn.BatchNorm2d(out_channels // 4)
+        self.bn1_3 = nn.BatchNorm2d(out_channels // 4)
+        self.bn1_4 = nn.BatchNorm2d(out_channels // 4)
+
+        self.conv3x3_1 = nn.Conv2d(out_channels // 4, out_channels // 4, kernel_size=3, stride=1, padding=1, dilation=1, bias=False)
+        self.conv3x3_2 = nn.Conv2d(out_channels // 4, out_channels // 4, kernel_size=3, stride=1, padding=2, dilation=2, bias=False)
+        self.conv3x3_3 = nn.Conv2d(out_channels // 4, out_channels // 4, kernel_size=3, stride=1, padding=4, dilation=4, bias=False)
+        self.conv3x3_4 = nn.Conv2d(out_channels // 4, out_channels // 4, kernel_size=3, stride=1, padding=8, dilation=8, bias=False)
+
+        self.bn2_1 = nn.BatchNorm2d(out_channels // 4)
+        self.bn2_2 = nn.BatchNorm2d(out_channels // 4)
+        self.bn2_3 = nn.BatchNorm2d(out_channels // 4)
+        self.bn2_4 = nn.BatchNorm2d(out_channels // 4)
+
+        self.conv1x1_out1 = nn.Conv2d(out_channels // 2, out_channels // 2, kernel_size=1, stride=1, padding=0)
+        self.conv1x1_out2 = nn.Conv2d(out_channels // 2, out_channels // 2, kernel_size=1, stride=1, padding=0)
+        self.bn_out1 = nn.BatchNorm2d(out_channels // 2)
+        self.bn_out2 = nn.BatchNorm2d(out_channels // 2)
+
+        self.conv1x1_final = nn.Conv2d(out_channels, out_channels, kernel_size=1, stride=1, padding=0)
+        self.bn_final = nn.BatchNorm2d(out_channels)
+
+    def forward(self, x):
+        x1 = F.relu(self.bn1_1(self.conv1x1_1(x)))
+        x2 = F.relu(self.bn1_2(self.conv1x1_2(x)))
+        x3 = F.relu(self.bn1_3(self.conv1x1_3(x)))
+        x4 = F.relu(self.bn1_4(self.conv1x1_4(x)))
+
+        x1_2 = x1 + x2
+        x3_4 = x3 + x4
+
+        x1 = F.relu(self.bn2_1(self.conv3x3_1(x1)))
+        x1 = x1 + x1_2
+
+        x2 = F.relu(self.bn2_2(self.conv3x3_2(x2)))
+        x2 = x2 + x1_2
+
+        x3 = F.relu(self.bn2_3(self.conv3x3_3(x3)))
+        x3 = x3 + x3_4
+
+        x4 = F.relu(self.bn2_4(self.conv3x3_4(x4)))
+        x4 = x4 + x3_4
+
+        x1_2 = torch.cat((x1, x2), dim=1)
+        x3_4 = torch.cat((x3, x4), dim=1)
+
+        x1_2 = F.relu(self.bn_out1(self.conv1x1_out1(x1_2)))
+        x3_4 = F.relu(self.bn_out2(self.conv1x1_out2(x3_4)))
+
+        y = torch.cat((x1_2, x3_4), dim=1)
+        y = F.relu(self.bn_final(self.conv1x1_final(y)))
+
+        return y
+
+
 class Decoder(nn.Module):
     def __init__(self, channel):
         super(CFM, self).__init__()
@@ -126,10 +194,10 @@ class Model(nn.Module):
 
         self.encoder = timm.create_model('tf_efficientnetv2_s.in21k_ft_in1k', pretrained=True, features_only=True) 
 
-        self.Translayer2_0 = BasicConv2d(64, channel, 1)
-        self.Translayer2_1 = BasicConv2d(128, channel, 1)
-        self.Translayer3_1 = BasicConv2d(320, channel, 1)
-        self.Translayer4_1 = BasicConv2d(512, channel, 1)
+        self.Translayer2_0 = PASPP(64, channel)
+        self.Translayer2_1 = PASPP(128, channel)
+        self.Translayer3_1 = PASPP(320, channel)
+        self.Translayer4_1 = PASPP(512, channel1)
 
         self.decoder = Decoder(channel)
         self.ca = ChannelAttention(64)
@@ -141,7 +209,7 @@ class Model(nn.Module):
 
     def forward(self, x):
 
-        # backbone
+        # Encoder
         encoder = self.backbone(x)
         x1 = encoder[0]
         x2 = encoder[1]
@@ -158,8 +226,9 @@ class Model(nn.Module):
       
         # Decoder
         cfm_feature = self.decoder(x4_t, x3_t, x2_t)
+        prediction1 = self.out_decoder(cfm_feature)
         
-        out1_resized = nn.functional.interpolate(cfm_feature, size=(64,64), mode='bilinear', align_corners=False)
+        out1_resized = nn.functional.interpolate(prediction1, size=(64,64), mode='bilinear', align_corners=False)
         out1_sigmoid = torch.sigmoid(out1_resized)
         threshold = 0.00001
         out1_s2 = (out1_sigmoid > threshold).float()
@@ -172,6 +241,8 @@ class Model(nn.Module):
 
         # Decoder
         cfm_feature1 = self.decoder(a4_s1, a3_s1, a2_s1)
+        prediction2 = self.out_decoder(cfm_feature1)
+        
         # Continuous Attention
         p1_s2 = cim_feature*(1-out1_s2)
         a2_s2 = self.attention_gate(p1_s2,x2_t)
@@ -180,9 +251,6 @@ class Model(nn.Module):
         
         # Decoder
         cfm_feature2 = self.decoder(a4_s2, a3_s2, a2_s2)
-
-        prediction1 = self.out_decoder(cfm_feature)
-        prediction2 = self.out_decoder(cfm_feature1)
         prediction3 = self.out_decoder(cfm_feature2)
 
         prediction1 = F.interpolate(prediction1, scale_factor=8, mode='bilinear') 
@@ -190,4 +258,5 @@ class Model(nn.Module):
         prediction3 = F.interpolate(prediction3, scale_factor=8, mode='bilinear')  
         out = torch.cat([prediction1_8, prediction2_8, prediction3_8], dim=1)
         out = self.out(out)
+        
         return torch.sigmoid(out)
