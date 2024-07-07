@@ -87,9 +87,9 @@ class SpatialAttention(nn.Module):
         x = self.conv1(x)
         return self.sigmoid(x)
 
-class AttentionBlock(nn.Module):
+class AttentionGate(nn.Module):
     def __init__(self, in_channels=32):
-        super(AttentionBlock, self).__init__()
+        super(AttentionGate, self).__init__()
         self.in_channels = in_channels
         
         self.bn_g = nn.BatchNorm2d(in_channels)
@@ -124,7 +124,7 @@ class Model(nn.Module):
     def __init__(self, channel=32):
         super(Model, self).__init__()
 
-        self.encoder = timm.create_model('caformer_s18.sail_in22k_ft_in1k_384', pretrained=True, features_only=True) 
+        self.encoder = timm.create_model('tf_efficientnetv2_s.in21k_ft_in1k', pretrained=True, features_only=True) 
 
         self.Translayer2_0 = BasicConv2d(64, channel, 1)
         self.Translayer2_1 = BasicConv2d(128, channel, 1)
@@ -135,8 +135,8 @@ class Model(nn.Module):
         self.ca = ChannelAttention(64)
         self.sa = SpatialAttention()
         
-        self.out_CFM = nn.Conv2d(channel, 1, 1)
-        self.attention_block = AttentionBlock()
+        self.out_decoder = nn.Conv2d(channel, 1, 1)
+        self.attention_gate = AttentionGate()
         self.out = nn.Conv2d(3,1,1)
 
     def forward(self, x):
@@ -166,24 +166,24 @@ class Model(nn.Module):
 
         # Continuous Attention
         p1_s1 = cim_feature*(1-out1_sigmoid)
-        a2_s1 = self.attention_block(p1_s1,x2_t)
-        a3_s1 = self.attention_block(a2_s1,x3_t)
-        a4_s1 = self.attention_block(a3_s1,x4_t)
+        a2_s1 = self.attention_gate(p1_s1,x2_t)
+        a3_s1 = self.attention_gate(a2_s1,x3_t)
+        a4_s1 = self.attention_gate(a3_s1,x4_t)
 
         # Decoder
         cfm_feature1 = self.decoder(a4_s1, a3_s1, a2_s1)
         # Continuous Attention
         p1_s2 = cim_feature*(1-out1_s2)
-        a2_s2 = self.attention_block(p1_s2,x2_t)
-        a3_s2 = self.attention_block(a2_s2,x3_t)
-        a4_s2 = self.attention_block(a3_s2,x4_t)
+        a2_s2 = self.attention_gate(p1_s2,x2_t)
+        a3_s2 = self.attention_gate(a2_s2,x3_t)
+        a4_s2 = self.attention_gate(a3_s2,x4_t)
         
         # Decoder
         cfm_feature2 = self.decoder(a4_s2, a3_s2, a2_s2)
 
-        prediction1 = self.out_CFM(cfm_feature)
-        prediction2 = self.out_CFM(cfm_feature1)
-        prediction3 = self.out_CFM(cfm_feature2)
+        prediction1 = self.out_decoder(cfm_feature)
+        prediction2 = self.out_decoder(cfm_feature1)
+        prediction3 = self.out_decoder(cfm_feature2)
 
         prediction1 = F.interpolate(prediction1, scale_factor=8, mode='bilinear') 
         prediction2 = F.interpolate(prediction2, scale_factor=8, mode='bilinear')  
