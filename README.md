@@ -15,27 +15,6 @@ In The 34th British Machine Vision Conference, 20th - 24th November 2023, Aberde
 class="center">
 </p>
 
-## Qualitative Results
-
-<p align="center">
-<img src="qualitative.png" width=75% height=40% 
-class="center">
-</p>
-
-## Contributions of Predicted Masks
-
-<p align="center">
-<img src="3_output.png" width=75% height=40% 
-class="center">
-</p>
-
-## Feature Maps
-
-<p align="center">
-<img src="feature_map.png" width=75% height=40% 
-class="center">
-</p>
-
 ## Usage:
 ### Recommended environment:
 Please use ```pip install -r requirements.txt``` to install the libraries.
