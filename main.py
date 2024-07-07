@@ -1,6 +1,6 @@
 from tqdm import tqdm
 from utils import *
-from models import PolypPVT, CaformerPVT, PolypPVT1#, PolypPVT2
+from models import Model
 import torch 
 import numpy as np
 from dataset import train_loader, validation_loader
