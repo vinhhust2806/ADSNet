@@ -46,9 +46,6 @@ Download the training and testing datasets [Google Drive](https://drive.google.c
 ### Training:
 Run ```python main.py```
 
-### Testing:
-Run ```python test.py```
-
 ### Polyp Segmentation Compared Results:
 We also provide some result of baseline methods, You could download from [Google Drive](https://drive.google.com/file/d/1xvjRl70pZbOO6wI5p94CSpZK2RAUnUnx/view?usp=sharing), including results of compared models.
 
