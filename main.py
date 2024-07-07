@@ -44,7 +44,6 @@ def train_model(train_loader, val_loader, loss_func, optimizer, num_epochs):
             image = image.to(device)
             mask = mask.to(device)
             outputs = model(image)
-            #outputs = output1 + output2 + output3 + output4
             out_cut = np.copy(outputs.data.cpu().numpy())
             out_cut[np.nonzero(out_cut < 0.5)] = 0.0
             out_cut[np.nonzero(out_cut >= 0.5)] = 1.0
