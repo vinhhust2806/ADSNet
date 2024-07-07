@@ -1,6 +1,6 @@
 # ADSNet: Adaptation of Distinct Semantic for Uncertain Areas in Polyp Segmentation, BMVC 2023 
 
-Official Pytorch implementation of [ADSNet: Adaptation of Distinct Semantic for Uncertain Areas in Polyp Segmentation](https://proceedings.bmvc2023.org/806/). 
+Official Pytorch implementation of [ADSNet: Adaptation of Distinct Semantic for Uncertain Areas in Polyp Segmentation](https://arxiv.org/pdf/2405.07523). 
  <br>
 <p>Chonnam National University</p>
 
@@ -11,7 +11,7 @@ In The 34th British Machine Vision Conference, 20th - 24th November 2023, Aberde
 ## Architecture
 
 <p align="center">
-<img src="architecture.png" width=100% height=40% 
+<img src="architecture.png" width=75% height=40% 
 class="center">
 </p>
 
