@@ -18,21 +18,21 @@ class="center">
 ## Qualitative Results
 
 <p align="center">
-<img src="qualitative.png" width=100% height=40% 
+<img src="qualitative.png" width=75% height=40% 
 class="center">
 </p>
 
 ## Contributions of Predicted Masks
 
 <p align="center">
-<img src="3_output.png" width=100% height=40% 
+<img src="3_output.png" width=75% height=40% 
 class="center">
 </p>
 
 ## Feature Maps
 
 <p align="center">
-<img src="feature_map.png" width=100% height=40% 
+<img src="feature_map.png" width=75% height=40% 
 class="center">
 </p>
 
@@ -44,10 +44,10 @@ Please use ```pip install -r requirements.txt``` to install the libraries.
 Download the training and testing datasets [Google Drive](https://drive.google.com/file/d/1pFxb9NbM8mj_rlSawTlcXG1OdVGAbRQC/view?usp=sharing) and move them into 'polyp/' folder.
 
 ### Training:
-Run ```python train.py --epoch 200 --batch_sise 16 --lr 1e-4 --min_lr 1e-8 --val_name kvasir```
+Run ```python main.py```
 
 ### Testing:
-Run ```python test.py --pretrain_path weight.hdf5 --test_name kvasir```
+Run ```python test.py```
 
 ### Polyp Segmentation Compared Results:
 We also provide some result of baseline methods, You could download from [Google Drive](https://drive.google.com/file/d/1xvjRl70pZbOO6wI5p94CSpZK2RAUnUnx/view?usp=sharing), including results of compared models.
