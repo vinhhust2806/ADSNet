@@ -37,7 +37,6 @@ We also provide some result of baseline methods, You could download from [Google
   year={2024}
 }
 
-```
 @inproceedings{Nguyen_2023_BMVC,
 author    = {Quang Vinh Nguyen and Van Thong Huynh and Soo-Hyung Kim},
 title     = {Adaptation of Distinct Semantics for Uncertain Areas in Polyp Segmentation},
