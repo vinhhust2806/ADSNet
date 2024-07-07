@@ -9,7 +9,7 @@ Official Pytorch implementation of [ADSNet: Adaptation of Distinct Semantic for 
 In The 34th British Machine Vision Conference, 20th - 24th November 2023, Aberdeen, UK.
 
 ## Tensorflow
-Official Tensorflow implementation is available at (https://github.com/vinhhust2806/ADSNet-BMVC2023-Tensorflow)
+Official Tensorflow implementation is available at [ADSNet-BMVC2023-Tensorflow](https://github.com/vinhhust2806/ADSNet-BMVC2023-Tensorflow)
 
 ## Architecture
 
