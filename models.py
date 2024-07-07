@@ -191,13 +191,13 @@ class Model(nn.Module):
 
         self.encoder = timm.create_model('tf_efficientnetv2_s.in21k_ft_in1k', pretrained=True, features_only=True) 
 
-        self.Translayer2_0 = PASPP(64, channel)
-        self.Translayer2_1 = PASPP(128, channel)
-        self.Translayer3_1 = PASPP(320, channel)
-        self.Translayer4_1 = PASPP(512, channel1)
-
+        self.Translayer2_0 = PASPP(48, channel)
+        self.Translayer2_1 = PASPP(64, channel)
+        self.Translayer3_1 = PASPP(160, channel)
+        self.Translayer4_1 = PASPP(256, channel1)
+        
         self.decoder = Decoder(channel)
-        self.ca = ChannelAttention(64)
+        self.ca = ChannelAttention(48)
         self.sa = SpatialAttention()
         
         self.out_decoder = nn.Conv2d(channel, 1, 1)
@@ -208,10 +208,10 @@ class Model(nn.Module):
 
         # Encoder
         encoder = self.backbone(x)
-        x1 = encoder[0]
-        x2 = encoder[1]
-        x3 = encoder[2]
-        x4 = encoder[3]
+        x1 = encoder[1]
+        x2 = encoder[2]
+        x3 = encoder[3]
+        x4 = encoder[4]
         
         # CIM
         x1 = self.ca(x1) * x1 # channel attention
