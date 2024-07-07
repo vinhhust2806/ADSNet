@@ -156,37 +156,34 @@ class SpatialAttention(nn.Module):
         return self.sigmoid(x)
 
 class AttentionGate(nn.Module):
-    def __init__(self, in_channels=32):
-        super(AttentionGate, self).__init__()
-        self.in_channels = in_channels
+    def __init__(self,F_g,F_l,F_int):
+        super(AttentionGate,self).__init__()
+        self.W_g = nn.Sequential(
+            nn.Conv2d(F_g, F_int, kernel_size=1,stride=1,padding=0,bias=True),
+            nn.BatchNorm2d(F_int)
+            )
         
-        self.bn_g = nn.BatchNorm2d(in_channels)
-        self.relu = nn.ReLU(inplace=True)
-        self.conv_g = nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1)
+        self.W_x = nn.Sequential(
+            nn.Conv2d(F_l, F_int, kernel_size=1,stride=1,padding=0,bias=True),
+            nn.BatchNorm2d(F_int)
+        )
+
+        self.psi = nn.Sequential(
+            nn.Conv2d(F_int, 1, kernel_size=1,stride=1,padding=0,bias=True),
+            nn.BatchNorm2d(1),
+            nn.Sigmoid()
+        )
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
-        self.bn_x = nn.BatchNorm2d(in_channels)
-        self.conv_x = nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1)
-        self.conv_gc = nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=1)
+        self.relu = nn.ReLU(inplace=True)
         
-    def forward(self, g, x):
-        g_conv = self.bn_g(g)
-        g_conv = self.relu(g_conv)
-        g_conv = self.conv_g(g_conv)
-        g_pool = self.pool(g_conv)
-        
-        x_conv = self.bn_x(x)
-        x_conv = self.relu(x_conv)
-        x_conv = self.conv_x(x_conv)
-        
-        gc_sum = g_pool + x_conv
-        
-        gc_conv = self.bn_g(gc_sum)  
-        gc_conv = self.relu(gc_conv)
-        gc_conv = self.conv_gc(gc_conv)
-        
-        gc_mul = gc_conv * x
-        
-        return gc_mul
+    def forward(self,g,x):
+        g1 = self.W_g(g)
+        g1 = self.pool(g1)
+        x1 = self.W_x(x)
+        psi = self.relu(g1+x1)
+        psi = self.psi(psi)
+
+        return x*psi
 
 class Model(nn.Module):
     def __init__(self, channel=32):
