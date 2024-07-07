@@ -8,6 +8,9 @@ Official Pytorch implementation of [ADSNet: Adaptation of Distinct Semantic for 
 
 In The 34th British Machine Vision Conference, 20th - 24th November 2023, Aberdeen, UK.
 
+## Tensorflow
+Official Tensorflow implementation is available at (https://github.com/vinhhust2806/ADSNet-BMVC2023-Tensorflow)
+
 ## Architecture
 
 <p align="center">
@@ -15,7 +18,7 @@ In The 34th British Machine Vision Conference, 20th - 24th November 2023, Aberde
 class="center">
 </p>
 
-## Usage:
+## Usage
 ### Recommended environment:
 Please use ```pip install -r requirements.txt``` to install the libraries.
 
@@ -25,7 +28,7 @@ Download the training and testing datasets [Google Drive](https://drive.google.c
 ### Training:
 Run ```python main.py```
 
-### Polyp Segmentation Compared Results:
+## Polyp Segmentation Compared Results
 We also provide some result of baseline methods, You could download from [Google Drive](https://drive.google.com/file/d/1xvjRl70pZbOO6wI5p94CSpZK2RAUnUnx/view?usp=sharing), including results of compared models.
 
 ## :bookmark_tabs: Citation
