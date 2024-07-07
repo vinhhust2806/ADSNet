@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import os
+import timm
 
 torch.manual_seed(31)
 
@@ -19,10 +19,6 @@ class BasicConv2d(nn.Module):
         x = self.conv(x)
         x = self.bn(x)
         return x
-
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
 
 class PASPP(nn.Module):
     def __init__(self, in_channels, out_channels):
