@@ -36,3 +36,13 @@ We also provide some result of baseline methods, You could download from [Google
   journal={arXiv preprint arXiv:2405.07523},
   year={2024}
 }
+
+```
+@inproceedings{Nguyen_2023_BMVC,
+author    = {Quang Vinh Nguyen and Van Thong Huynh and Soo-Hyung Kim},
+title     = {Adaptation of Distinct Semantics for Uncertain Areas in Polyp Segmentation},
+booktitle = {34th British Machine Vision Conference 2023, {BMVC} 2023, Aberdeen, UK, November 20-24, 2023},
+publisher = {BMVA},
+year      = {2023},
+url       = {https://papers.bmvc2023.org/0806.pdf}
+}
