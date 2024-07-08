@@ -22,7 +22,7 @@ class BasicConv2d(nn.Module):
 
 class PASPP(nn.Module):
     def __init__(self, in_channels, out_channels):
-        super(FeatureTransform, self).__init__()
+        super(PASPP, self).__init__()
         self.conv1x1_1 = nn.Conv2d(in_channels, out_channels // 4, kernel_size=1, stride=1, padding=0)
         self.conv1x1_2 = nn.Conv2d(in_channels, out_channels // 4, kernel_size=1, stride=1, padding=0)
         self.conv1x1_3 = nn.Conv2d(in_channels, out_channels // 4, kernel_size=1, stride=1, padding=0)
@@ -86,7 +86,7 @@ class PASPP(nn.Module):
 
 class Decoder(nn.Module):
     def __init__(self, channel):
-        super(CFM, self).__init__()
+        super(Decoder, self).__init__()
         self.relu = nn.ReLU(True)
 
         self.upsample = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
