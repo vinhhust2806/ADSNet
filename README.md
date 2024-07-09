@@ -14,7 +14,7 @@ Official Tensorflow implementation is available at [ADSNet-BMVC2023-Tensorflow](
 class="center">
 </p>
 
-## Usage
+## 1. Usage
 ### Recommended environment:
 Please use ```pip install -r requirements.txt``` to install the libraries.
 
@@ -24,10 +24,11 @@ Download the training and testing datasets [Google Drive](https://drive.google.c
 ### Training:
 Run ```python main.py```
 
-## Polyp Segmentation Compared Results
+## 2. Polyp Segmentation Compared Results
 We also provide some result of baseline methods, You could download from [Google Drive](https://drive.google.com/file/d/1xvjRl70pZbOO6wI5p94CSpZK2RAUnUnx/view?usp=sharing), including results of compared models.
 
-## :bookmark_tabs: Citation
+## 3. Citation
+If you have found our work useful, please use the following reference to cite this project:
 ```
 @article{nguyen2024adaptation,
   title={Adaptation of Distinct Semantics for Uncertain Areas in Polyp Segmentation},
