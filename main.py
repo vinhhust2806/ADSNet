@@ -6,7 +6,11 @@ from dataset import train_loader, validation_loader
 from utils import *
 from models import Model
 
-torch.manual_seed(31)
+SEED = 28
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+torch.cuda.manual_seed(SEED)
+
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 def validate(model, val_loader, criterion):
@@ -35,7 +39,7 @@ def train_model(train_loader, val_loader, loss_func, optimizer, num_epochs):
     max = 0
 
     for epoch in range(num_epochs):
-        #adjust_lr(optimizer, 1e-4, epoch, 0.1, 50)
+        adjust_lr(optimizer, 1e-4, epoch, 0.1, 50)
         model.train()
 
         losses = []
@@ -50,7 +54,7 @@ def train_model(train_loader, val_loader, loss_func, optimizer, num_epochs):
             out_cut[np.nonzero(out_cut >= 0.5)] = 1.0
 
             train_dice_ = dice_coef_metric(out_cut, mask.data.cpu().numpy())
-            loss = loss_func(outputs, mask) #+ loss_func(outputs1, mask) + loss_func(outputs2, mask)
+            loss = loss_func(outputs, mask) 
             losses.append(loss.item())
             train_dice.append(train_dice_)
 
