@@ -1,11 +1,12 @@
-from tqdm import tqdm
-from utils import *
-from models import Model
 import torch 
 import numpy as np
-from dataset import train_loader, validation_loader
-torch.manual_seed(31)
+from tqdm import tqdm
 
+from dataset import train_loader, validation_loader
+from utils import *
+from models import Model
+
+torch.manual_seed(31)
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 def validate(model, val_loader, criterion):
