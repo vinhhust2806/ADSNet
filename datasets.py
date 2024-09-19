@@ -1,10 +1,9 @@
-from torch.utils.data import Dataset
 import torch
 import torch.nn as nn
-from PIL import Image
+from torch.utils.data import Dataset, DataLoader
 import torchvision.transforms as transforms
-from torch.utils.data import DataLoader
 import numpy as np
+from PIL import Image
 import glob
 
 SEED = 28
@@ -15,13 +14,14 @@ torch.cuda.manual_seed(SEED)
 transform = transforms.Compose([
                   transforms.Resize((352, 352)),
                   transforms.ToTensor(),
-])
+                                ])
 
 class dataset(Dataset):
   def __init__(self, image_path, label_path, transform):
     self.image_path = sorted(glob.glob(image_path+'/*'))
     self.label_path = sorted(glob.glob(label_path+'/*'))
     self.transform = transform
+    
   def __len__(self):
     return len(self.label_path)
 
@@ -38,6 +38,7 @@ class dataset(Dataset):
 train_dataset = dataset(image_path = 'polyp/TrainDataset/images' , label_path = 'polyp/TrainDataset/masks', transform = transform)
 validation_dataset = dataset(image_path = 'polyp/TestDataset/Kvasir/images' , label_path = 'polyp/TestDataset/Kvasir/masks', transform = transform)
 test_dataset = dataset(image_path = 'polyp/TestDataset/Kvasir/images'  , label_path = 'polyp/TestDataset/Kvasir/masks', transform = transform)
+
 train_loader = DataLoader(dataset = train_dataset , batch_size = 16)
 validation_loader = DataLoader(dataset = validation_dataset , batch_size = 1)
 test_loader = DataLoader(dataset = test_dataset , batch_size = 1)
