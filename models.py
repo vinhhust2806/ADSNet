@@ -3,7 +3,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 import timm
 
-torch.manual_seed(31)
+SEED = 28
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+torch.cuda.manual_seed(SEED)
 
 class BasicConv2d(nn.Module):
     def __init__(self, in_planes, out_planes, kernel_size, stride=1, padding=0, dilation=1):
@@ -23,6 +26,7 @@ class BasicConv2d(nn.Module):
 class PASPP(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(PASPP, self).__init__()
+        
         self.conv1x1_1 = nn.Conv2d(in_channels, out_channels // 4, kernel_size=1, stride=1, padding=0)
         self.conv1x1_2 = nn.Conv2d(in_channels, out_channels // 4, kernel_size=1, stride=1, padding=0)
         self.conv1x1_3 = nn.Conv2d(in_channels, out_channels // 4, kernel_size=1, stride=1, padding=0)
@@ -83,7 +87,6 @@ class PASPP(nn.Module):
 
         return y
 
-
 class Decoder(nn.Module):
     def __init__(self, channel):
         super(Decoder, self).__init__()
@@ -119,6 +122,7 @@ class Decoder(nn.Module):
 class ChannelAttention(nn.Module):
     def __init__(self, in_planes, ratio=16):
         super(ChannelAttention, self).__init__()
+        
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
         self.max_pool = nn.AdaptiveMaxPool2d(1)
 
@@ -132,6 +136,7 @@ class ChannelAttention(nn.Module):
         avg_out = self.fc2(self.relu1(self.fc1(self.avg_pool(x))))
         max_out = self.fc2(self.relu1(self.fc1(self.max_pool(x))))
         out = avg_out + max_out
+        
         return self.sigmoid(out)
 
 class SpatialAttention(nn.Module):
@@ -149,11 +154,13 @@ class SpatialAttention(nn.Module):
         max_out, _ = torch.max(x, dim=1, keepdim=True)
         x = torch.cat([avg_out, max_out], dim=1)
         x = self.conv1(x)
+        
         return self.sigmoid(x)
 
 class AttentionGate(nn.Module):
     def __init__(self,F_g,F_l,F_int):
         super(AttentionGate,self).__init__()
+        
         self.W_g = nn.Sequential(
             nn.Conv2d(F_g, F_int, kernel_size=1,stride=1,padding=0,bias=True),
             nn.BatchNorm2d(F_int)
@@ -189,7 +196,7 @@ class Model(nn.Module):
         
         self.Translayer2_1 = PASPP(64, channel)
         self.Translayer3_1 = PASPP(160, channel)
-        self.Translayer4_1 = PASPP(256, channel1)
+        self.Translayer4_1 = PASPP(256, channel)
         
         self.decoder = Decoder(channel)
         self.ca = ChannelAttention(48)
