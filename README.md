@@ -4,7 +4,7 @@
 Van Thong Huynh,
 Soo Hyung Kim,
 
-[![paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/pdf/2405.07523). 
+[![paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/pdf/2405.07523)
 
 Official PyTorch implementation
 
@@ -12,7 +12,7 @@ Official PyTorch implementation
 
 
 # :fire: News
-* **(September 19, 2024)**
+* **(September 19, 2023)**
   * Paper accepted at BMVC 2023!🎊
 <hr />
 
@@ -31,10 +31,10 @@ in the polyp image segmentation task. Especially, the proposed architecture coul
 1) [Highlights](#Highlights) 
 2) [Installation](#Installation)
 3) [Dataset Preparation](#Dataset-Preparation)
-4) [Background Generation](#Background-Generation)
-5) [Datasets](#Datasets)
-6) [Evaluation](#Evaluation)
-7) [Results](#Results)
+4) [Training](#Training)
+5) [Results](#Results)
+6) [BibTeX](#bibtex)
+7) [Contacts](#Contacts)
 
 
 <a name="Installation"/>
@@ -45,18 +45,24 @@ in the polyp image segmentation task. Especially, the proposed architecture coul
 pip install -r requirements.txt
 ```
 
-<a name="Dataset Preparation"/>
+<a name="Dataset-Preparation"/>
 
 ## 🏁 Dataset Preparation:
 Download the datasets from [here](https://drive.google.com/file/d/1pFxb9NbM8mj_rlSawTlcXG1OdVGAbRQC/view?usp=sharing) and put them into `polyp/` folder.
+
+<a name="Training"/>
 
 ## 🚀 Training:
 ```python
 python main.py
 ```
 
-## 4. Polyp Segmentation Compared Results
-We also provide some result of baseline methods, You could download from [Google Drive](https://drive.google.com/file/d/1xvjRl70pZbOO6wI5p94CSpZK2RAUnUnx/view?usp=sharing), including results of compared models.
+<a name="Results"/>
+
+## 🛡️ Results
+You could download results of baseline methods from [here](https://drive.google.com/file/d/1xvjRl70pZbOO6wI5p94CSpZK2RAUnUnx/view?usp=sharing).
+
+<a name="bibtex"/>
 
 ## 📚 BibTeX
 If you have found our work useful, please consider citing:
@@ -71,7 +77,7 @@ If you have found our work useful, please consider citing:
 
 <hr />
 
-<a name="contact"/>
+<a name="Contacts"/>
 
 ## 📧 Contact
 Should you have any question, please create an issue on this repository or contact at vinhbn28@jnu.ac.kr
