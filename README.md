@@ -46,12 +46,12 @@ pip install -r requirements.txt
 
 <a name="Dataset-Preparation"/>
 
-## 🏁 Dataset Preparation:
+## 🏁 Dataset Preparation
 Download the datasets from [here](https://drive.google.com/file/d/1pFxb9NbM8mj_rlSawTlcXG1OdVGAbRQC/view?usp=sharing) and put them into `polyp/` folder.
 
 <a name="Training"/>
 
-## 🚀 Training:
+## 🚀 Training
 ```python
 python main.py
 ```
