@@ -53,7 +53,20 @@ Download the datasets from [here](https://drive.google.com/file/d/1pFxb9NbM8mj_r
 
 ## 🚀 Training
 ```python
-python main.py
+# Validate on Kvasir Dataset
+python main.py --test_dataset Kvasir --image_size 352 --epoch 200 --batch_size 32 --learning_rate 1e-4
+
+# Validate on CVC-ClinicDB Dataset
+python main.py --test_dataset CVC-ClinicDB --image_size 352 --epoch 200 --batch_size 32 --learning_rate 1e-4
+
+# Validate on CVC-ColonDB Dataset
+python main.py --test_dataset CVC-ColonDB --image_size 352 --epoch 200 --batch_size 32 --learning_rate 1e-4
+
+# Validate on CVC-300 Dataset
+python main.py --test_dataset CVC-300 --image_size 352 --epoch 200 --batch_size 32 --learning_rate 1e-4
+
+# Validate on ETIS-LaribPolypDB Dataset
+python main.py --test_dataset ETIS-LaribPolypDB --image_size 352 --epoch 200 --batch_size 32 --learning_rate 1e-4
 ```
 
 <a name="Results"/>
