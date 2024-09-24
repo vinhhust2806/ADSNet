@@ -92,7 +92,7 @@ If you have found our work useful, please consider citing:
 <a name="Contacts"/>
 
 ## 📧 Contact
-Should you have any question, please create an issue on this repository or contact at vinhbn28@jnu.ac.kr
+Should you have any question, please create an issue on this repository or contact at vinhbn28@jnu.ac.kr or vinhbn28@gmail.com
 
 <hr />
 
