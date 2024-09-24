@@ -23,7 +23,6 @@ class Model(nn.Module):
         self.mask = nn.Conv2d(channel, 1, 1)
         self.out = nn.Conv2d(3,1,1)
     def forward(self, x):
-
         # Encoder
         encoder = self.encoder(x)
         x1 = encoder[1]
