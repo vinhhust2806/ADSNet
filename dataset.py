@@ -14,7 +14,6 @@ class dataset(Dataset):
       self.image_path = sorted(glob.glob(args.test_dir + '/' + args.test_dataset + '/images/*'))
       self.mask_path = sorted(glob.glob(args.test_dir + '/' + args.test_dataset + '/masks/*'))
     
-    #print(self.mask_path)
     self.transform = transforms.Compose([
                   transforms.Resize((args.image_size, args.image_size)),
                   transforms.ToTensor()])
