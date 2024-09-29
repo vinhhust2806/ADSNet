@@ -1,19 +1,16 @@
-from torch.utils.data import Dataset
-from PIL import Image
-import torchvision.transforms as transforms
 import glob
-
+from PIL import Image
+from torch.utils.data import Dataset
+import torchvision.transforms as transforms
 
 class dataset(Dataset):
   def __init__(self, args, mode = 'train'):
     if mode == 'train':
       self.image_path = sorted(glob.glob(args.train_dir +'/images/*'))
       self.mask_path = sorted(glob.glob(args.train_dir +'/masks/*'))
-
     elif mode == 'test':
       self.image_path = sorted(glob.glob(args.test_dir + '/' + args.test_dataset + '/images/*'))
       self.mask_path = sorted(glob.glob(args.test_dir + '/' + args.test_dataset + '/masks/*'))
-    
     self.transform = transforms.Compose([
                   transforms.Resize((args.image_size, args.image_size)),
                   transforms.ToTensor()])
@@ -30,5 +27,3 @@ class dataset(Dataset):
     mask[mask >=0.5] = 1
     mask[mask <0.5] = 0
     return image, mask 
-
-
