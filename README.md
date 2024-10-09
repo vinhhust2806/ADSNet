@@ -13,9 +13,9 @@ Official PyTorch implementation
 
 # :fire: News
 * **(August 25, 2023)**
-  * Paper accepted as **ORAL** at BMVC (Rank A) 2023! ⭐
+  * Paper accepted as **ORAL** at BMVC 2023 (Rank A) ! ⭐
 * **(May 12, 2023)**
-  * Paper submitted at BMVC (Rank A) 2023! ⌚
+  * Paper submitted at BMVC 2023 (Rank A) ! ⌚
 
 <hr />
 
