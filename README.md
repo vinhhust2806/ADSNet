@@ -1,7 +1,7 @@
 # **ADSNet: Adaptation of Distinct Semantic for Uncertain Areas in Polyp Segmentation [BMVC 2023]** 
 
 [Quang Vinh Nguyen](https://github.com/HashmatShadab), 
-Van Thong Huynh,
+[Van Thong Huynh](https://github.com/th2l),
 Soo Hyung Kim,
 
 [![paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/pdf/2405.07523)
