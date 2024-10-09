@@ -2,7 +2,7 @@
 
 [Quang Vinh Nguyen](https://github.com/vinhhust2806), 
 [Van Thong Huynh](https://github.com/th2l),
-Soo Hyung Kim,
+Soo Hyung Kim
 
 [![paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/pdf/2405.07523)
 
