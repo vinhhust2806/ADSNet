@@ -31,7 +31,7 @@ in the polyp image segmentation task. Especially, the proposed architecture coul
 pip install -r requirements.txt
 ```
 
-## 🏁 Dataset Preparation
+## 🍓 Dataset Preparation
 Download the datasets from [here](https://drive.google.com/file/d/1pFxb9NbM8mj_rlSawTlcXG1OdVGAbRQC/view?usp=sharing) and put them into `polyp/` folder.
 
 ## 🚀 Training
@@ -58,11 +58,11 @@ You could download results of baseline methods from [here](https://drive.google.
 ## 📚 BibTeX
 If you have found our work useful, please consider citing:
 ```bibtex
-@article{nguyen2024adaptation,
-  title={Adaptation of Distinct Semantics for Uncertain Areas in Polyp Segmentation},
-  author={Nguyen, Quang Vinh and Huynh, Van Thong and Kim, Soo-Hyung},
-  journal={arXiv preprint arXiv:2405.07523},
-  year={2024}
+@inproceedings{ADSNet,
+author    = {Quang Vinh Nguyen and Van Thong Huynh and Soo-Hyung Kim},
+title     = {Adaptation of Distinct Semantics for Uncertain Areas in Polyp Segmentation},
+booktitle = {BMVC},
+year      = {2023}
 }
 ```
 
