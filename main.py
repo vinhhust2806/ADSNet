@@ -1,11 +1,11 @@
+import torch 
 import argparse 
 import numpy as np 
-from tqdm import tqdm 
+from utils import *
 from model import *
-import torch 
+from tqdm import tqdm 
 from dataset import dataset
 from torch.utils.data import DataLoader
-from utils import *
 
 parser = argparse.ArgumentParser(description = "Do Stuff")
 
